@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { FavoritosPage } from '../pages/favoritos/favoritos';
 import { CategoriasPage } from '../pages/categorias/categorias';
 import { ConfiguracoesPage } from '../pages/configuracoes/configuracoes';
+import { NoticiasExibirPage } from '../pages/noticias-exibir/noticias-exibir';
 
 @Component({
   templateUrl: 'app.html'

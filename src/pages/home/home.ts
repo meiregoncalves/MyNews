@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-
+import {NoticiasExibirPage} from '../noticias-exibir/noticias-exibir'
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -31,7 +31,7 @@ export class HomePage {
 
   itemTapped(event, item) {
     // That's right, we're pushing to ourselves!
-    this.navCtrl.push(HomePage, {
+    this.navCtrl.push(NoticiasExibirPage, {
       item: item
     });
   }

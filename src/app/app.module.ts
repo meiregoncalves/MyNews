@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { FavoritosPage } from '../pages/favoritos/favoritos';
 import { CategoriasPage } from '../pages/categorias/categorias';
 import { ConfiguracoesPage } from '../pages/configuracoes/configuracoes';
+import { NoticiasExibirPage } from '../pages/noticias-exibir/noticias-exibir';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -17,7 +18,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomePage,
     FavoritosPage,
     CategoriasPage,
-    ConfiguracoesPage
+    ConfiguracoesPage,
+    NoticiasExibirPage
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomePage,
     FavoritosPage,
     CategoriasPage,
-    ConfiguracoesPage
+    ConfiguracoesPage,
+    NoticiasExibirPage
   ],
   providers: [
     StatusBar,
