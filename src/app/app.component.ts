@@ -28,6 +28,7 @@ export class MyApp {
       { title: 'Favoritos', component: FavoritosPage },
       { title: 'Categorias', component: CategoriasPage },
       { title: 'Configurações', component: ConfiguracoesPage }
+
     ];
 
   }
