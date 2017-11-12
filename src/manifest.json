@@ -1,6 +1,6 @@
 {
-  "name": "Ionic",
-  "short_name": "Ionic",
+  "name": "My News",
+  "short_name": "MyNews",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
