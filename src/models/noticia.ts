@@ -1,4 +1,6 @@
 import { Categoria } from './categoria'
+import { Site } from './sites'
+
 export class Noticia {
   id: number;
 
@@ -8,8 +10,8 @@ export class Noticia {
   comentario: string;
   descricao: string;
   categoria: Categoria;
-  site: string;
-  constructor(imagem:string, url:string, favorito: boolean, descricao: string, categoria: Categoria, site:string) {
+  site: Site;
+  constructor(imagem:string, url:string, favorito: boolean, descricao: string, categoria: Categoria, site:Site) {
     this.imagem = imagem;
     this.url = url;
     this.favorito = favorito;
