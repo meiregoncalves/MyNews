@@ -10,12 +10,17 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>configuracoes</ion-title>
+    <ion-title>Configurações</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+      <ion-checkbox checked="{{item.selecionado}}" (ionChange)="updateSite(item)" item-start></ion-checkbox>
+      <ion-label>{{item.nome}}</ion-label>
+    </button>
+  </ion-list>
 </ion-content>
