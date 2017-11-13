@@ -12,7 +12,11 @@ import { NoticiasExibirPage } from '../pages/noticias-exibir/noticias-exibir';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-@NgModule({
+
+/* LocalStorage */
+import { LocalStorageModule } from 'angular-2-local-storage';
+
+@NgModule({ 
   declarations: [
     MyApp,
     HomePage,
@@ -24,6 +28,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    LocalStorageModule.withConfig({
+      prefix: 'despesasApp',
+      storageType: 'localStorage'
+    })
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
