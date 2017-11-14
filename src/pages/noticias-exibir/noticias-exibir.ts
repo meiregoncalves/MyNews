@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Noticia } from  '../../models/noticia'
 
 /**
  * Generated class for the NoticiasExibirPage page.
@@ -14,12 +15,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'noticias-exibir.html',
 })
 export class NoticiasExibirPage {
+  item : Noticia;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.item = this.navParams.get("item")
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad NoticiasExibirPage');
+  }
+
+  getURL()
+  {
+    return this.item.url;
   }
 
 }

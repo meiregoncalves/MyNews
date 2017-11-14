@@ -15,8 +15,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 /* LocalStorage */
 import { LocalStorageModule } from 'angular-2-local-storage';
+import { FeedProvider } from '../providers/feed/feed';
+import { HttpModule }   from   '@angular/http' ;
 
-@NgModule({ 
+@NgModule({
   declarations: [
     MyApp,
     HomePage,
@@ -28,6 +30,7 @@ import { LocalStorageModule } from 'angular-2-local-storage';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    HttpModule,
     LocalStorageModule.withConfig({
       prefix: 'despesasApp',
       storageType: 'localStorage'
@@ -46,7 +49,8 @@ import { LocalStorageModule } from 'angular-2-local-storage';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    FeedProvider
   ]
 })
 export class AppModule {}

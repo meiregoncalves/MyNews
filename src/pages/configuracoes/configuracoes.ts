@@ -17,14 +17,12 @@ import { LocalStorageService } from 'angular-2-local-storage';
 })
 export class ConfiguracoesPage {
   items: Site[];
+  site : Site;
   constructor(public navCtrl: NavController, public navParams: NavParams, private localStorageService: LocalStorageService) {
     if (this.localStorageService.get("sites") != null) {
       this.items = [];
-      let array = JSON.parse(<string>this.localStorageService.get("sites"));
-      for (let i = 0; i < array.length; i++) {
-          let c = new Site(array[i].nome, array[i].selecionado, array[i].id);
-          this.items.push(c);
-      }
+      this.site = new Site();
+      this.items = this.site.ListaSites(localStorageService);
     }
   }
 

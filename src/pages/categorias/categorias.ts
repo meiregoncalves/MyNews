@@ -16,14 +16,12 @@ import { Categoria } from '../../models/categoria'
 })
 export class CategoriasPage {
   items: Categoria[];
+  categoria : Categoria;
   constructor(public navCtrl: NavController, public navParams: NavParams, private localStorageService: LocalStorageService) {
     if (this.localStorageService.get("categorias") != null) {
       this.items = [];
-      let array = JSON.parse(<string>this.localStorageService.get("categorias"));
-      for (let i = 0; i < array.length; i++) {
-          let c = new Categoria(array[i].nome, array[i].selecionado, array[i].id);
-          this.items.push(c);
-      }
+      this.categoria = new Categoria();
+      this.items = this.categoria.ListaCategorias(localStorageService);
     }
 
   }
