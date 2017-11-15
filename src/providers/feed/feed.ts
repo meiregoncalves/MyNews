@@ -60,7 +60,9 @@ export class FeedProvider {
            noticias.push(noticiaatual);
          }
          localStorageService.add("noticias", JSON.stringify(noticias));
+         localStorageService.set("ultima_atualizacao", new Date());
        }
+
        noticias = this.GetLocalNoticias(localStorageService);
        return noticias
      } )
