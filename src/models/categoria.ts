@@ -14,9 +14,11 @@ export class Categoria {
   {
     var items: Categoria[] = [];
     let array = JSON.parse(<string>localStorageService.get("categorias"));
-    for (let i = 0; i < array.length; i++) {
-        let c = new Categoria(array[i].nome, array[i].selecionado, array[i].id);
-        items.push(c);
+    if (array != null ) {
+      for (let i = 0; i < array.length; i++) {
+          let c = new Categoria(array[i].nome, array[i].selecionado, array[i].id);
+          items.push(c);
+      }
     }
     return items;
   }

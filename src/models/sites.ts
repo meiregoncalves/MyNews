@@ -14,9 +14,11 @@ export class Site {
   {
     var items: Site[] = [];
     let array = JSON.parse(<string>localStorageService.get("sites"));
-    for (let i = 0; i < array.length; i++) {
-        let c = new Site(array[i].nome, array[i].selecionado, array[i].id);
-        items.push(c);
+    if (array != null ) {
+      for (let i = 0; i < array.length; i++) {
+          let c = new Site(array[i].nome, array[i].selecionado, array[i].id);
+          items.push(c);
+      }
     }
     return items;
   }

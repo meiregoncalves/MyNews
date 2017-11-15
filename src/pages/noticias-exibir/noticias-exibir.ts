@@ -24,9 +24,4 @@ export class NoticiasExibirPage {
   ionViewDidLoad() {
   }
 
-  getURL()
-  {
-    return this.item.url;
-  }
-
 }
