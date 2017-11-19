@@ -30,7 +30,7 @@ export class FeedProvider {
     let array = JSON.parse(<string>localStorageService.get("noticias"));
     if (array != null) {
       for (let i = 0; i < array.length; i++) {
-          let c = new Noticia(array[i].titulo, array[i].imagem, array[i].url, array[i].favorito, array[i].descricao, array[i].caategoria, array[i].site);
+          let c = new Noticia(array[i].titulo, array[i].url, array[i].favorito, array[i].lida, array[i].caategoria, array[i].site);
           items.push(c);
       }
     }
@@ -38,11 +38,6 @@ export class FeedProvider {
   }
 
   public getNoticiasbyURL (noticia : Cadastro_Feed, localStorageService : LocalStorageService  )   {
-    var ultima_atualizacao = localStorageService.get("ultima_atualizacao");
-    if (ultima_atualizacao == null) {
-      ultima_atualizacao = new Date();
-    }
-
      var url = 'https://query.yahooapis.com/v1/public/yql?q=select%20title%2Clink%2Cdescription%20from%20rss%20where%20url%3D%22' + encodeURIComponent ( noticia.url ) + '%22&format=json' ;
      var noticias : Noticia[] = [];
      return  this.http.get(url)
@@ -54,12 +49,15 @@ export class FeedProvider {
            let item = lista[i] ;
            let  noticiaatual  =  new  Noticia(item.title,item.link,false,false,noticia.categoria,noticia.site) ;
            noticias.push(noticiaatual);
+
+           // if (!localStorage.getItem("noticias").indexOf(noticiaatual.url)) {
+           //    localStorage.setItem("noticias",JSON.stringify(noticiaatual));
+           // }
          }
-         localStorageService.add("noticias", JSON.stringify(noticias));
+
          localStorageService.set("ultima_atualizacao", new Date());
        }
 
-       noticias = this.GetLocalNoticias(localStorageService);
        return noticias
      } )
    }
