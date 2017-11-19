@@ -21,6 +21,7 @@ export class HomePage {
   listaSites: Site[];
   listaCadastro_Feed : Cadastro_Feed[];
   LocalStorageService : LocalStorageService;
+  FeedProvider: FeedProvider;
   constructor(public navCtrl: NavController, public navParams: NavParams, localStorage: LocalStorageService, public feedProvider : FeedProvider) {
     if (localStorage.get("categorias") == null) {
       this.inicializaStorage(localStorage);
@@ -28,7 +29,7 @@ export class HomePage {
     this.listaCadastro_Feed = new Cadastro_Feed().ListaCadastro_Feeds(localStorage);
     this.selectedItem = navParams.get('item');
     this.LocalStorageService = localStorage;
-
+    this.feedProvider = feedProvider;
     // this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
     // 'american-football', 'boat', 'bluetooth', 'build'];
   }
@@ -38,10 +39,24 @@ export class HomePage {
   }
 
   getFeeds() {
-     this.feedProvider.getNoticiasbyURL(this.listaCadastro_Feed[0], this.LocalStorageService)
-     .subscribe(
-       noticias => this.items = noticias
-    )
+    var it = [];
+    var count = 0, el = 0;
+    for (; count < this.listaCadastro_Feed.length; count++) {
+      it[count] = [];
+      this.feedProvider.getNoticiasbyURL(this.listaCadastro_Feed[count], this.LocalStorageService)
+        .subscribe(
+          noticias => {
+            it[el] = noticias
+            el++;
+            if (el == count) {
+              this.items = this.feedProvider.GetLocalNoticias();
+            }
+          }
+      );
+    }
+
+
+
   }
 
   itemTapped(event, item) {
