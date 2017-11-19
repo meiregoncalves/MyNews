@@ -65,11 +65,32 @@ export class NoticiasProvider {
       .catch((e) => console.error(e));
   }
 
-  public getAll(active: boolean, titulo: string = null) {
+  public getByURL(url: string) {
+    return this.dbProvider.getDB()
+      .then((db: SQLiteObject) => {
+        let sql = 'select id, titulo, url, favorito, lida, comentario, idCategoria, idSite from noticias where url = ?';
+        let data = [url];
+
+        return db.executeSql(sql, data)
+          .then((data: any) => {
+            if (data.rows.length > 0) {
+              let item = data.rows.item(0);
+              let noticia = new Noticia(item.titulo, item.url, item.favorito, item.lida, item.categoria, item.site);
+              return noticia;
+            }
+
+            return null;
+          })
+          .catch((e) => console.error(e));
+      })
+      .catch((e) => console.error(e));
+  }
+
+  public getAll(titulo: string = null) {
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
         let sql = 'select id, titulo, url, favorito, lida, comentario, idCategoria, idSite from noticias';
-        var data: any[] = [active ? 1 : 0];
+        var data: any[] = [];
 
         if (titulo) {
           sql += ' and titulo like ?'

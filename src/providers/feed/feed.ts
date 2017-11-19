@@ -6,6 +6,7 @@ import { Categoria } from '../../models/categoria';
 import { Site } from '../../models/sites';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Cadastro_Feed } from '../../models/cadastro_Feeds';
+import { NoticiasProvider } from '../database/noticias'
 import   'rxjs/add/operator/map' ;
 
  export   class   Feed   {
@@ -21,25 +22,18 @@ import   'rxjs/add/operator/map' ;
 @Injectable()
 export class FeedProvider {
 
-  constructor(public http: Http) {
+  constructor(public http: Http, private noticiasProvider : NoticiasProvider) {
   }
 
-  public GetLocalNoticias(localStorageService : LocalStorageService)
+  public GetLocalNoticias()
   {
-    var items: Noticia[] = [];
-    let array = JSON.parse(<string>localStorageService.get("noticias"));
-    if (array != null) {
-      for (let i = 0; i < array.length; i++) {
-          let c = new Noticia(array[i].titulo, array[i].url, array[i].favorito, array[i].lida, array[i].caategoria, array[i].site);
-          items.push(c);
-      }
-    }
-    return items;
+    return this.noticiasProvider.getAll();
   }
 
   public getNoticiasbyURL (noticia : Cadastro_Feed, localStorageService : LocalStorageService  )   {
      var url = 'https://query.yahooapis.com/v1/public/yql?q=select%20title%2Clink%2Cdescription%20from%20rss%20where%20url%3D%22' + encodeURIComponent ( noticia.url ) + '%22&format=json' ;
      var noticias : Noticia[] = [];
+
      return  this.http.get(url)
      .map(data => data.json() ['query'] ['results'])
      .map((res) => {
@@ -50,9 +44,9 @@ export class FeedProvider {
            let  noticiaatual  =  new  Noticia(item.title,item.link,false,false,noticia.categoria,noticia.site) ;
            noticias.push(noticiaatual);
 
-           // if (!localStorage.getItem("noticias").indexOf(noticiaatual.url)) {
-           //    localStorage.setItem("noticias",JSON.stringify(noticiaatual));
-           // }
+           if (this.noticiasProvider.getByURL(noticiaatual.url) == null) {
+             this.noticiasProvider.insert(noticiaatual);
+           }
          }
 
          localStorageService.set("ultima_atualizacao", new Date());

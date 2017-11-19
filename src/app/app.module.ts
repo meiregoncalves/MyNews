@@ -17,6 +17,7 @@ import { LocalStorageModule } from 'angular-2-local-storage';
 import { FeedProvider } from '../providers/feed/feed';
 import { HttpModule }   from   '@angular/http' ;
 import { DatabaseProvider } from '../providers/database/database';
+import { NoticiasProvider } from '../providers/database/noticias';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { DatabaseProvider } from '../providers/database/database';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     FeedProvider,
     SQLite,
-    DatabaseProvider
+    DatabaseProvider,
+    NoticiasProvider
   ]
 })
 export class AppModule {}
