@@ -50,13 +50,9 @@ export class FeedProvider {
      .map((res) => {
        if  ( res !=  null )   {
          let lista = res['item'] ;
-         var length = 20 ;
          for (let i = 0 ; i < lista.length ; i ++ )   {
            let item = lista[i] ;
-           var descricao = item.description.length > length ?
-                                                            item.description.substring(0,80) + "..."   :
-                                                            item. description ;
-           let  noticiaatual  =  new  Noticia(item.title,'',item.link,false,descricao,noticia.categoria,noticia.site) ;
+           let  noticiaatual  =  new  Noticia(item.title,item.link,false,false,noticia.categoria,noticia.site) ;
            noticias.push(noticiaatual);
          }
          localStorageService.add("noticias", JSON.stringify(noticias));
