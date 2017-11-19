@@ -8,6 +8,7 @@ import { FavoritosPage } from '../pages/favoritos/favoritos';
 import { CategoriasPage } from '../pages/categorias/categorias';
 import { ConfiguracoesPage } from '../pages/configuracoes/configuracoes';
 import { NoticiasExibirPage } from '../pages/noticias-exibir/noticias-exibir';
+import { DatabaseProvider } from '../providers/database/database'
 
 @Component({
   templateUrl: 'app.html'
@@ -19,7 +20,7 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public dbProvider: DatabaseProvider) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -38,7 +39,14 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+
+      this.dbProvider.createDatabase()
+        .then(() => {
+          this.splashScreen.hide();
+        })
+        .catch(() => {
+          this.splashScreen.hide();
+        });
     });
   }
 

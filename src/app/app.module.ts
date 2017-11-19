@@ -8,15 +8,15 @@ import { FavoritosPage } from '../pages/favoritos/favoritos';
 import { CategoriasPage } from '../pages/categorias/categorias';
 import { ConfiguracoesPage } from '../pages/configuracoes/configuracoes';
 import { NoticiasExibirPage } from '../pages/noticias-exibir/noticias-exibir';
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 /* LocalStorage */
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { FeedProvider } from '../providers/feed/feed';
 import { HttpModule }   from   '@angular/http' ;
+import { DatabaseProvider } from '../providers/database/database';
 
 @NgModule({
   declarations: [
@@ -50,7 +50,9 @@ import { HttpModule }   from   '@angular/http' ;
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    FeedProvider
+    FeedProvider,
+    SQLite,
+    DatabaseProvider
   ]
 })
 export class AppModule {}
