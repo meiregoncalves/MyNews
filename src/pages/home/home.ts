@@ -35,10 +35,10 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    this.getFeeds();
+    this.getFeeds(this.items);
   }
 
-  getFeeds() {
+  getFeeds(items) {
     var it = [];
     var count = 0, el = 0;
     for (; count < this.listaCadastro_Feed.length; count++) {
@@ -49,7 +49,9 @@ export class HomePage {
             it[el] = noticias
             el++;
             if (el == count) {
-              this.items = this.feedProvider.GetLocalNoticias();
+              this.feedProvider.GetLocalNoticias().then(function(noticias) {
+                  items = noticias
+              });
             }
           }
       );

@@ -86,10 +86,11 @@ export class NoticiasProvider {
       .catch((e) => console.error(e));
   }
 
-  public getAll(titulo: string = null) {
+  public getAll(titulo: string = null)  {
+    var noticias: Noticia[] = [];
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
-        let sql = 'select id, titulo, url, favorito, lida, comentario, idCategoria, idSite from noticias';
+        var sql = 'select id, titulo, url, favorito, lida, comentario, idCategoria, idSite from noticias';
         var data: any[] = [];
 
         if (titulo) {
@@ -101,19 +102,23 @@ export class NoticiasProvider {
 
         return db.executeSql(sql, data)
           .then((data: any) => {
+
             if (data.rows.length > 0) {
-              let noticias: any[] = [];
               for (var i = 0; i < data.rows.length; i++) {
                 var noticia = data.rows.item(i);
                 noticias.push(noticia);
               }
-              return noticias;
-            } else {
-              return [];
             }
+            return noticias;
           })
-          .catch((e) => console.error(e));
+          .catch((e) => {
+             console.error(e);
+             return noticias;
+          })
       })
-      .catch((e) => console.error(e));
+      .catch((e) => {
+        console.error(e);
+      return noticias;
+    })
   }
 }
