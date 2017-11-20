@@ -14,6 +14,7 @@ import { Noticia } from  '../../models/noticia'
   selector: 'page-noticias-exibir',
   templateUrl: 'noticias-exibir.html',
 })
+
 export class NoticiasExibirPage {
   item : Noticia;
 
@@ -23,6 +24,7 @@ export class NoticiasExibirPage {
   }
 
   ionViewDidLoad() {
+
   }
 
 }

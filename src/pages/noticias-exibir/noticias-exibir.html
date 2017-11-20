@@ -14,5 +14,6 @@
 
 
 <ion-content padding>
-  <iframe src="{{item.url}}" width="WIDTH" height="HEIGHT" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+  <iframe src="{{item.url | safe}}" width="WIDTH" height="HEIGHT" frameborder="0"></iframe>
 </ion-content>
