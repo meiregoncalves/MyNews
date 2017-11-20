@@ -76,11 +76,9 @@ export class NoticiasProvider {
           .then((data: any) => {
             if (data.rows.length > 0) {
               let item = data.rows.item(0);
-              console.log("dentro");
               noticia.url = item.url;
               return noticia;
             }
-            console.log("fora");
             return noticia;
           })
           .catch((e) => {console.error(e)
@@ -104,18 +102,16 @@ export class NoticiasProvider {
           data.push('%' + titulo + '%');
         }
 
-        sql += ' order by lida desc LIMIT 5'
+        sql += ' order by lida desc'
 
         return db.executeSql(sql, data)
           .then((data: any) => {
-            console.log("PEGOU");
             if (data.rows.length > 0) {
               for (var i = 0; i < data.rows.length; i++) {
                 var noticia = data.rows.item(i);
                 noticias.push(noticia);
               }
             }
-            console.log("PEGOU" + noticias);
             return noticias;
           })
           .catch((e) => {

@@ -44,11 +44,14 @@ export class FeedProvider {
            let  noticiaatual  =  new  Noticia(item.title,item.link,false,false,noticia.categoria,noticia.site) ;
            noticias.push(noticiaatual);
            var validacao = new Noticia();
-           this.noticiasProvider.getByURL(noticiaatual.url).then((noticia) => validacao = noticia);
-           console.log("MEIRE" + validacao);
-           if (validacao.url == "") {
-             this.noticiasProvider.insert(noticiaatual);
-           }
+           this.noticiasProvider.getByURL(noticiaatual.url).then((noticia) => {
+             console.log("MEIRE " + noticia.url);
+             if (noticia.url == "") {
+                console.log("ADD " + JSON.stringify(noticia));
+                this.noticiasProvider.insert(noticiaatual);
+             }
+
+           });
          }
 
          localStorageService.set("ultima_atualizacao", new Date());

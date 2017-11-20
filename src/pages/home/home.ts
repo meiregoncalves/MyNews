@@ -39,7 +39,6 @@ export class HomePage {
 
   setItems() {
     this.feedProvider.GetLocalNoticias().then(noticia => {
-      console.log('pega local ' + JSON.stringify(noticia));
       this.items = noticia;
     });
   }
@@ -50,7 +49,6 @@ export class HomePage {
       this.feedProvider.getNoticiasbyURL(this.listaCadastro_Feed[count], this.LocalStorageService).subscribe(noticias => {
         el++;
         if (el == this.listaCadastro_Feed.length) {
-          console.log('el == lenght');
           this.setItems();
         }
       });
