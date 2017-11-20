@@ -45,7 +45,7 @@ export class FeedProvider {
            noticias.push(noticiaatual);
            var validacao = new Noticia();
            this.noticiasProvider.getByURL(noticiaatual.url).then((noticia) => validacao = noticia);
-           console.log("MEIRE" + validacao.url);
+           console.log("MEIRE" + validacao);
            if (validacao.url == "") {
              this.noticiasProvider.insert(noticiaatual);
            }

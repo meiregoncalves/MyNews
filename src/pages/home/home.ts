@@ -21,7 +21,6 @@ export class HomePage {
   listaSites: Site[];
   listaCadastro_Feed : Cadastro_Feed[];
   LocalStorageService : LocalStorageService;
-  FeedProvider: FeedProvider;
   constructor(public navCtrl: NavController, public navParams: NavParams, localStorage: LocalStorageService, public feedProvider : FeedProvider) {
     if (localStorage.get("categorias") == null) {
       this.inicializaStorage(localStorage);
@@ -29,38 +28,33 @@ export class HomePage {
     this.listaCadastro_Feed = new Cadastro_Feed().ListaCadastro_Feeds(localStorage);
     this.selectedItem = navParams.get('item');
     this.LocalStorageService = localStorage;
-    this.feedProvider = feedProvider;
+
     // this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
     // 'american-football', 'boat', 'bluetooth', 'build'];
   }
 
   ionViewDidLoad() {
-    this.getFeeds(this.items);
+    this.getFeeds();
   }
 
-  getFeeds(items) {
-    var it = [];
+  setItems() {
+    this.feedProvider.GetLocalNoticias().then(noticia => {
+      console.log('pega local ' + JSON.stringify(noticia));
+      this.items = noticia;
+    });
+  }
+
+  getFeeds() {
     var count = 0, el = 0;
     for (; count < this.listaCadastro_Feed.length; count++) {
-      it[count] = [];
-      this.feedProvider.getNoticiasbyURL(this.listaCadastro_Feed[count], this.LocalStorageService)
-        .subscribe(
-          noticias => {
-            it[el] = noticias
-            el++;
-            if (el == count) {
-              this.feedProvider.GetLocalNoticias().then(function(noticias) {
-                  console.log("AOOOOO" + JSON.stringify(noticias));
-                  items = noticias;
-                  console.log("GEMIDAO" + JSON.stringify(items))
-              });
-            }
-          }
-      );
+      this.feedProvider.getNoticiasbyURL(this.listaCadastro_Feed[count], this.LocalStorageService).subscribe(noticias => {
+        el++;
+        if (el == this.listaCadastro_Feed.length) {
+          console.log('el == lenght');
+          this.setItems();
+        }
+      });
     }
-
-
-
   }
 
   itemTapped(event, item) {

@@ -77,7 +77,7 @@ export class NoticiasProvider {
             if (data.rows.length > 0) {
               let item = data.rows.item(0);
               console.log("dentro");
-              noticia = new Noticia(item.titulo, item.url, item.favorito, item.lida, item.categoria, item.site);
+              noticia.url = item.url;
               return noticia;
             }
             console.log("fora");
