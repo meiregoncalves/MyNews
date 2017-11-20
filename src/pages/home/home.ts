@@ -62,6 +62,7 @@ export class HomePage {
           el++;
           if (el == ativos) {
             setTimeout(5000,this.setItems());
+            //this.items = noticias;
           }
         });
       } else {

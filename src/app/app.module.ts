@@ -18,19 +18,6 @@ import { FeedProvider } from '../providers/feed/feed';
 import { HttpModule }   from   '@angular/http' ;
 import { DatabaseProvider } from '../providers/database/database';
 import { NoticiasProvider } from '../providers/database/noticias';
-import { Pipe, PipeTransform } from '@angular/core';
-import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
-
-@Pipe({ name: 'safe' })
-export class SafePipe implements PipeTransform {
-  constructor(private sanitizer: DomSanitizer) {}
-  transform(url) {
-    console.log("URL: " + url);
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  }
-}
-
-
 
 @NgModule({
   declarations: [
@@ -39,8 +26,7 @@ export class SafePipe implements PipeTransform {
     FavoritosPage,
     CategoriasPage,
     ConfiguracoesPage,
-    NoticiasExibirPage,
-    SafePipe
+    NoticiasExibirPage
   ],
   imports: [
     BrowserModule,

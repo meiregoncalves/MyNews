@@ -9,8 +9,6 @@ import { CategoriasPage } from '../pages/categorias/categorias';
 import { ConfiguracoesPage } from '../pages/configuracoes/configuracoes';
 import { NoticiasExibirPage } from '../pages/noticias-exibir/noticias-exibir';
 import { DatabaseProvider } from '../providers/database/database'
-import { Pipe, PipeTransform } from '@angular/core';
-import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   templateUrl: 'app.html'
