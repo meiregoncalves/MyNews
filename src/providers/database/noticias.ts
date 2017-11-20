@@ -9,12 +9,13 @@ export class NoticiasProvider {
   constructor(private dbProvider: DatabaseProvider) { }
 
   public insert(noticia: Noticia) {
+    console.log('ADICIONOU NOTICIA aqui');
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
         let sql = 'insert into noticias (titulo, url, favorito, lida, comentario, idCategoria, idSite) values (?, ?, ?, ?, ?, ?, ?)';
         let data = [noticia.titulo, noticia.url, noticia.favorito, noticia.lida, noticia.comentario, noticia.categoria.id, noticia.site.id];
 
-        return db.executeSql(sql, data)
+        return db.executeSql(sql, data).then(()=> console.log('ADICIONOU NOTICIA'))
           .catch((e) => console.error(e));
       })
       .catch((e) => console.error(e));
@@ -23,8 +24,8 @@ export class NoticiasProvider {
   public update(noticia: Noticia) {
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
-        let sql = 'update noticias set titulo = ?, url = ?, favorito = ?, lida = ?, comentario = ?, idCategoria = ?, idSite = ? where id = ?';
-        let data = [noticia.titulo, noticia.url, noticia.favorito, noticia.lida, noticia.comentario, noticia.categoria.id, noticia.site.id, noticia.id];
+        let sql = 'update noticias set titulo = ?, url = ?, favorito = ?, lida = ?, comentario = ?, idCategoria = ?, idSite = ? where rowid = ?';
+        let data = [noticia.titulo, noticia.url, noticia.favorito, noticia.lida, noticia.comentario, noticia.categoria.id, noticia.site.id, noticia.rowid];
 
         return db.executeSql(sql, data)
           .catch((e) => console.error(e));
@@ -35,7 +36,7 @@ export class NoticiasProvider {
   public remove(id: number) {
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
-        let sql = 'delete from noticias where id = ?';
+        let sql = 'delete from noticias where rowid = ?';
         let data = [id];
 
         return db.executeSql(sql, data)
@@ -47,7 +48,7 @@ export class NoticiasProvider {
   public get(id: number) {
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
-        let sql = 'select id, titulo, url, favorito, lida, comentario, idCategoria, idSite from noticias where id = ?';
+        let sql = 'select rowid, titulo, url, favorito, lida, comentario, idCategoria, idSite from noticias where rowid = ?';
         let data = [id];
 
         return db.executeSql(sql, data)
@@ -66,31 +67,36 @@ export class NoticiasProvider {
   }
 
   public getByURL(url: string) {
+    var noticia = new Noticia();
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
-        let sql = 'select id, titulo, url, favorito, lida, comentario, idCategoria, idSite from noticias where url = ?';
+        let sql = 'select rowid, titulo, url, favorito, lida, comentario, idCategoria, idSite from noticias where url = ?';
         let data = [url];
-
         return db.executeSql(sql, data)
           .then((data: any) => {
             if (data.rows.length > 0) {
               let item = data.rows.item(0);
-              let noticia = new Noticia(item.titulo, item.url, item.favorito, item.lida, item.categoria, item.site);
+              console.log("dentro");
+              noticia = new Noticia(item.titulo, item.url, item.favorito, item.lida, item.categoria, item.site);
               return noticia;
             }
-
-            return null;
+            console.log("fora");
+            return noticia;
           })
-          .catch((e) => console.error(e));
+          .catch((e) => {console.error(e)
+            return noticia;
+          });
       })
-      .catch((e) => console.error(e));
+      .catch((e) =>{console.error(e)
+        return noticia;
+      });
   }
 
   public getAll(titulo: string = null)  {
     var noticias: Noticia[] = [];
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
-        var sql = 'select id, titulo, url, favorito, lida, comentario, idCategoria, idSite from noticias';
+        var sql = 'select rowid, titulo, url, favorito, lida, comentario, idCategoria, idSite from noticias';
         var data: any[] = [];
 
         if (titulo) {
@@ -98,17 +104,18 @@ export class NoticiasProvider {
           data.push('%' + titulo + '%');
         }
 
-        sql += ' order by lidas desc'
+        sql += ' order by lida desc LIMIT 5'
 
         return db.executeSql(sql, data)
           .then((data: any) => {
-
+            console.log("PEGOU");
             if (data.rows.length > 0) {
               for (var i = 0; i < data.rows.length; i++) {
                 var noticia = data.rows.item(i);
                 noticias.push(noticia);
               }
             }
+            console.log("PEGOU" + noticias);
             return noticias;
           })
           .catch((e) => {

@@ -50,7 +50,9 @@ export class HomePage {
             el++;
             if (el == count) {
               this.feedProvider.GetLocalNoticias().then(function(noticias) {
-                  items = noticias
+                  console.log("AOOOOO" + JSON.stringify(noticias));
+                  items = noticias;
+                  console.log("GEMIDAO" + JSON.stringify(items))
               });
             }
           }

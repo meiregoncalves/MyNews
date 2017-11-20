@@ -43,8 +43,10 @@ export class FeedProvider {
            let item = lista[i] ;
            let  noticiaatual  =  new  Noticia(item.title,item.link,false,false,noticia.categoria,noticia.site) ;
            noticias.push(noticiaatual);
-
-           if (this.noticiasProvider.getByURL(noticiaatual.url) == null) {
+           var validacao = new Noticia();
+           this.noticiasProvider.getByURL(noticiaatual.url).then((noticia) => validacao = noticia);
+           console.log("MEIRE" + validacao.url);
+           if (validacao.url == "") {
              this.noticiasProvider.insert(noticiaatual);
            }
          }
