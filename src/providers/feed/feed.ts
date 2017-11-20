@@ -50,7 +50,6 @@ export class FeedProvider {
                 console.log("ADD " + JSON.stringify(noticia));
                 this.noticiasProvider.insert(noticiaatual);
              }
-
            });
          }
 

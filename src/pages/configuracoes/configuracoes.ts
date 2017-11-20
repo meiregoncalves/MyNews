@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Site } from '../../models/sites'
 import { LocalStorageService } from 'angular-2-local-storage';
+import { NoticiasProvider } from '../../providers/database/noticias'
 
 /**
  * Generated class for the ConfiguracoesPage page.
@@ -18,7 +19,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 export class ConfiguracoesPage {
   items: Site[];
   site : Site;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private localStorageService: LocalStorageService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private localStorageService: LocalStorageService, private noticiasProvider : NoticiasProvider) {
     if (this.localStorageService.get("sites") != null) {
       this.items = [];
       this.site = new Site();
@@ -32,6 +33,8 @@ export class ConfiguracoesPage {
         if (item.id == this.items[i].id) {
             if (item.selecionado) {
               this.items[i].selecionado = false;
+              console.log("vai remover: " + this.items[i].nome);
+              this.noticiasProvider.removebySite(item.id);
             } else {
               this.items[i].selecionado = true;
             }

@@ -18,6 +18,7 @@ export class NoticiasExibirPage {
   item : Noticia;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    console.log("entoru no exibir");
     this.item = this.navParams.get("item")
   }
 

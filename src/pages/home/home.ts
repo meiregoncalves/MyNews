@@ -21,11 +21,13 @@ export class HomePage {
   listaSites: Site[];
   listaCadastro_Feed : Cadastro_Feed[];
   LocalStorageService : LocalStorageService;
+  tolerancia: number = 0;
   constructor(public navCtrl: NavController, public navParams: NavParams, localStorage: LocalStorageService, public feedProvider : FeedProvider) {
     if (localStorage.get("categorias") == null) {
       this.inicializaStorage(localStorage);
+    } else {
+      this.listaCadastro_Feed = new Cadastro_Feed().ListaCadastro_Feeds(localStorage);
     }
-    this.listaCadastro_Feed = new Cadastro_Feed().ListaCadastro_Feeds(localStorage);
     this.selectedItem = navParams.get('item');
     this.LocalStorageService = localStorage;
 
@@ -39,23 +41,37 @@ export class HomePage {
 
   setItems() {
     this.feedProvider.GetLocalNoticias().then(noticia => {
-      this.items = noticia;
+      console.log("NOTICIAS TRAZIDAS: " + JSON.stringify(noticia));
+      if (noticia.length == 0 && this.tolerancia < 5) {
+        this.tolerancia++;
+        setTimeout(5000,this.setItems());
+      } else {
+        this.items = noticia;
+      }
     });
   }
 
   getFeeds() {
+    this.listaCadastro_Feed = new Cadastro_Feed().ListaCadastro_Feeds(this.LocalStorageService);
     var count = 0, el = 0;
+    var ativos = this.listaCadastro_Feed.length;
     for (; count < this.listaCadastro_Feed.length; count++) {
-      this.feedProvider.getNoticiasbyURL(this.listaCadastro_Feed[count], this.LocalStorageService).subscribe(noticias => {
-        el++;
-        if (el == this.listaCadastro_Feed.length) {
-          this.setItems();
-        }
-      });
+      if (this.listaCadastro_Feed[count].site.selecionado && this.listaCadastro_Feed[count].categoria.selecionado) {
+        console.log("Site selecionado: " + JSON.stringify(this.listaCadastro_Feed[count]));
+        this.feedProvider.getNoticiasbyURL(this.listaCadastro_Feed[count], this.LocalStorageService).subscribe(noticias => {
+          el++;
+          if (el == ativos) {
+            setTimeout(5000,this.setItems());
+          }
+        });
+      } else {
+        ativos--;
+      }
     }
   }
 
   itemTapped(event, item) {
+    console.log("entrou pag" + item);
     this.navCtrl.push(NoticiasExibirPage, {
       item: item
     });
@@ -100,6 +116,7 @@ export class HomePage {
   inicializaCadastroFeeds(localStorage: LocalStorageService) {
     this.listaCadastro_Feed = [];
     //Beleza Cultura Economia Educacao Esporte Tecnologia
+
     this.feedEstadao("http://www.estadao.com.br/rss/");
 
     this.feedFolha("http://feeds.folha.uol.com.br/folha/")

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Categoria } from '../../models/categoria'
+import { NoticiasProvider } from '../../providers/database/noticias'
 /**
  * Generated class for the CategoriasPage page.
  *
@@ -17,7 +18,7 @@ import { Categoria } from '../../models/categoria'
 export class CategoriasPage {
   items: Categoria[];
   categoria : Categoria;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private localStorageService: LocalStorageService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private localStorageService: LocalStorageService, private noticiasProvider : NoticiasProvider) {
     if (this.localStorageService.get("categorias") != null) {
       this.items = [];
       this.categoria = new Categoria();
@@ -31,6 +32,8 @@ export class CategoriasPage {
       if (item.id == this.items[i].id) {
           if (item.selecionado) {
             this.items[i].selecionado = false;
+            console.log("Categoria que sera removida: " + this.items[i].nome);
+            this.noticiasProvider.removebyCategoria(item.id);
           } else {
             this.items[i].selecionado = true;
           }

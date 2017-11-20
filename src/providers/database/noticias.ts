@@ -45,6 +45,30 @@ export class NoticiasProvider {
       .catch((e) => console.error(e));
   }
 
+  public removebyCategoria(id: number) {
+    return this.dbProvider.getDB()
+      .then((db: SQLiteObject) => {
+        let sql = 'delete from noticias where idCategoria = ?';
+        let data = [id];
+        console.log("ID" + id);
+        return db.executeSql(sql, data)
+          .catch((e) => console.error(e));
+      })
+      .catch((e) => console.error(e));
+  }
+
+  public removebySite(id: number) {
+    return this.dbProvider.getDB()
+      .then((db: SQLiteObject) => {
+        let sql = 'delete from noticias where idSite = ?';
+        let data = [id];
+        console.log("id delete" + id);
+        return db.executeSql(sql, data)
+          .catch((e) => console.error(e));
+      })
+      .catch((e) => console.error(e));
+  }
+
   public get(id: number) {
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
