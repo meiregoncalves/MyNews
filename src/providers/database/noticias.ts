@@ -2,11 +2,15 @@ import { Injectable } from '@angular/core';
 import { SQLiteObject } from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../database/database';
 import { Noticia } from  '../../models/noticia';
+import { Categoria } from  '../../models/categoria';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 @Injectable()
 export class NoticiasProvider {
-
-  constructor(private dbProvider: DatabaseProvider) { }
+  localStorage: LocalStorageService;
+  constructor(private dbProvider: DatabaseProvider, localStorage: LocalStorageService) {
+    this.localStorage = localStorage;
+  }
 
   public insert(noticia: Noticia) {
     console.log('ADICIONOU NOTICIA aqui');
@@ -112,6 +116,57 @@ export class NoticiasProvider {
       .catch((e) =>{console.error(e)
         return noticia;
       });
+  }
+
+  public tratarCategoria(id:number) {
+      let categoria = new Categoria();
+      let categorias = categoria.ListaCategorias(this.localStorage);
+      for (let i = 0; i < categorias.length;i++) {
+        if (id == categorias[i].id) {
+          categoria = categorias[i];
+        }
+      }
+      return categoria;
+  }
+
+  public getLimitado(titulo: string = null, limite:number) {
+    var noticias: Noticia[] = [];
+    return this.dbProvider.getDB()
+      .then((db: SQLiteObject) => {
+        var sql = 'select rowid, titulo, url, favorito, lida, comentario, idCategoria, idSite from noticias';
+        var data: any[] = [];
+
+        if (titulo) {
+          sql += ' and titulo like ?'
+          data.push('%' + titulo + '%');
+        }
+
+        //sql += ' order by lida desc'
+        sql += ' LIMIT 15 OFFSET ' + limite;
+        return db.executeSql(sql, data)
+          .then((data: any) => {
+            if (data.rows.length > 0) {
+              for (var i = 0; i < data.rows.length; i++) {
+                var noticia = data.rows.item(i);
+
+                console.log("categoria: " + noticia.idCategoria);
+
+                noticia.categoria = this.tratarCategoria(noticia.idCategoria);
+                console.log("categoria2: " + noticia.categoria);
+                noticias.push(noticia);
+              }
+            }
+            return noticias;
+          })
+          .catch((e) => {
+             console.error(e);
+             return noticias;
+          })
+      })
+      .catch((e) => {
+        console.error(e);
+      return noticias;
+    });
   }
 
   public getAll(titulo: string = null)  {

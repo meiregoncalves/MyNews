@@ -30,6 +30,11 @@ export class FeedProvider {
     return this.noticiasProvider.getAll();
   }
 
+  public GetLocalNoticiasLim(limite: number)
+  {
+    return this.noticiasProvider.getLimitado(null, limite);
+  }
+
   public getNoticiasbyURL (noticia : Cadastro_Feed, localStorageService : LocalStorageService  )   {
      var url = 'https://query.yahooapis.com/v1/public/yql?q=select%20title%2Clink%2Cdescription%20from%20rss%20where%20url%3D%22' + encodeURIComponent ( noticia.url ) + '%22&format=json' ;
      var noticias : Noticia[] = [];

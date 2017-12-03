@@ -22,6 +22,7 @@ export class HomePage {
   listaCadastro_Feed : Cadastro_Feed[];
   LocalStorageService : LocalStorageService;
   tolerancia: number = 0;
+  limite: number = 0;
   constructor(public navCtrl: NavController, public navParams: NavParams, localStorage: LocalStorageService, public feedProvider : FeedProvider) {
     if (localStorage.get("categorias") == null) {
       this.inicializaStorage(localStorage);
@@ -40,7 +41,8 @@ export class HomePage {
   }
 
   setItems() {
-    this.feedProvider.GetLocalNoticias().then(noticia => {
+    this.feedProvider.GetLocalNoticiasLim(this.limite).then(noticia => {
+      this.limite = 15;
       console.log("NOTICIAS TRAZIDAS: " + JSON.stringify(noticia));
       if (noticia.length == 0 && this.tolerancia < 5) {
         this.tolerancia++;
@@ -49,6 +51,21 @@ export class HomePage {
         this.items = noticia;
       }
     });
+  }
+
+  doInfinite(infiniteScroll) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      this.feedProvider.GetLocalNoticiasLim(this.limite).then(noticia=> {
+        for (let i = 0; i < noticia.length; i++) {
+            this.items.push(noticia[i]);
+        }
+        this.limite+=15;
+      });
+      console.log('Async operation has ended');
+      infiniteScroll.complete();
+    }, 500);
   }
 
   getFeeds() {

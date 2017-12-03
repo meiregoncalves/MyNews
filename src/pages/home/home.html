@@ -8,16 +8,16 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-start></ion-icon>
-      {{item.titulo}}
-      <div class="item-note" item-end>
+ <ion-list>
+   <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+<img item-start width="64" height="64" src="assets/imgs/categorias/{{item.categoria.id}}.png"/>
 
-      </div>
-    </button>
-  </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.titulo}}</b>
-  </div>
+     {{item.titulo}}
+   </button>
+ </ion-list>
+
+ <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+   <ion-infinite-scroll-content></ion-infinite-scroll-content>
+ </ion-infinite-scroll>
+
 </ion-content>
