@@ -9,10 +9,12 @@
 
 <ion-content>
  <ion-list>
-   <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-<img item-start width="64" height="64" src="assets/imgs/categorias/{{item.categoria.id}}.png"/>
-
-     {{item.titulo}}
+   <button ion-item *ngFor="let item of items" >
+    <div (click)="itemTapped($event, item)">
+      <img item-start width="64" height="64" src="assets/imgs/categorias/{{item.categoria.id}}.png"/>
+      <label text-wrap>{{item.titulo}}</label>
+    </div>
+    <img (click)="itemFavoritar($event, item)" item-end width="64" height="64" src="assets/imgs/{{item.favorito?'fav':'notfav'}}.png"/>
    </button>
  </ion-list>
 

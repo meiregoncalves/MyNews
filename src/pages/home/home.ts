@@ -88,6 +88,10 @@ export class HomePage {
     }
   }
 
+  itemFavoritar(event, item) {
+      console.log("foioioioi");
+  }
+
   itemTapped(event, item) {
     console.log("entrou pag" + item);
 
