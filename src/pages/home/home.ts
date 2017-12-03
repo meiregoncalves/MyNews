@@ -73,9 +73,11 @@ export class HomePage {
 
   itemTapped(event, item) {
     console.log("entrou pag" + item);
-    this.navCtrl.push(NoticiasExibirPage, {
-      item: item
-    });
+
+    window.open(item.url,'_system');
+    //this.navCtrl.push(NoticiasExibirPage, {
+    //  item: item
+    //});
   }
 
   inicializaStorage( localStorage: LocalStorageService) {
