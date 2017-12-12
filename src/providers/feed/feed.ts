@@ -30,9 +30,14 @@ export class FeedProvider {
     return this.noticiasProvider.getAll();
   }
 
-  public GetLocalNoticiasLim(limite: number)
+  public GetLocalNoticiasLim(limite: number, somenteFavoritos : boolean)
   {
-    return this.noticiasProvider.getLimitado(null, limite);
+    return this.noticiasProvider.getLimitado(null, limite, somenteFavoritos);
+  }
+
+  public UpdateNoticia(noticia : Noticia)
+  {
+    this.noticiasProvider.update(noticia);
   }
 
   public getNoticiasbyURL (noticia : Cadastro_Feed, localStorageService : LocalStorageService  )   {
@@ -46,7 +51,7 @@ export class FeedProvider {
          let lista = res['item'] ;
          for (let i = 0 ; i < lista.length ; i ++ )   {
            let item = lista[i] ;
-           let  noticiaatual  =  new  Noticia(item.title,item.link,false,false,noticia.categoria,noticia.site) ;
+           let  noticiaatual  =  new  Noticia(item.title,item.link,0,false,noticia.categoria,noticia.site) ;
            noticias.push(noticiaatual);
            var validacao = new Noticia();
            this.noticiasProvider.getByURL(noticiaatual.url).then((noticia) => {

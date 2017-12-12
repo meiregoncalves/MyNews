@@ -14,7 +14,7 @@
       <img item-start width="64" height="64" src="assets/imgs/categorias/{{item.categoria.id}}.png"/>
       <label text-wrap>{{item.titulo}}</label>
     </div>
-    <img (click)="itemFavoritar($event, item)" item-end width="64" height="64" src="assets/imgs/{{item.favorito?'fav':'notfav'}}.png"/>
+    <img (click)="itemFavoritar($event, item)" item-end width="30" height="30" src="assets/imgs/{{item.favorito==1?'fav':'notfav'}}.png"/>
    </button>
  </ion-list>
 

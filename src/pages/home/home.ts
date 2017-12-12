@@ -31,9 +31,6 @@ export class HomePage {
     }
     this.selectedItem = navParams.get('item');
     this.LocalStorageService = localStorage;
-
-    // this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    // 'american-football', 'boat', 'bluetooth', 'build'];
   }
 
   ionViewDidLoad() {
@@ -41,7 +38,7 @@ export class HomePage {
   }
 
   setItems() {
-    this.feedProvider.GetLocalNoticiasLim(this.limite).then(noticia => {
+    this.feedProvider.GetLocalNoticiasLim(this.limite, false).then(noticia => {
       this.limite = 15;
       console.log("NOTICIAS TRAZIDAS: " + JSON.stringify(noticia));
       if (noticia.length == 0 && this.tolerancia < 5) {
@@ -57,7 +54,7 @@ export class HomePage {
     console.log('Begin async operation');
 
     setTimeout(() => {
-      this.feedProvider.GetLocalNoticiasLim(this.limite).then(noticia=> {
+      this.feedProvider.GetLocalNoticiasLim(this.limite, false).then(noticia=> {
         for (let i = 0; i < noticia.length; i++) {
             this.items.push(noticia[i]);
         }
@@ -89,13 +86,15 @@ export class HomePage {
   }
 
   itemFavoritar(event, item) {
-      console.log("foioioioi");
+      console.log(item.favorito);
+      item.favorito = item.favorito==1 ? 0 : 1;
+      this.feedProvider.UpdateNoticia(item);
   }
 
   itemTapped(event, item) {
     console.log("entrou pag" + item);
 
-    window.open(item.url,'_system');
+    window.open(item.url,'_system', 'location=yes');
     //this.navCtrl.push(NoticiasExibirPage, {
     //  item: item
     //});

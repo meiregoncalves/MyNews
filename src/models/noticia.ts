@@ -5,12 +5,12 @@ export class Noticia {
   rowid: number;
   titulo: string;
   url: string;
-  favorito: boolean;
+  favorito: number;
   lida: boolean;
   comentario: string;
   categoria: Categoria;
   site: Site;
-  constructor(titulo: string = "", url:string = "", favorito: boolean = false, lida: boolean = false, categoria: Categoria = new Categoria(), site:Site = new Site()) {
+  constructor(titulo: string = "", url:string = "", favorito: number = 0, lida: boolean = false, categoria: Categoria = new Categoria(), site:Site = new Site()) {
     this.titulo = titulo;
     this.url = url;
     this.favorito = favorito;

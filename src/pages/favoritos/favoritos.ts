@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { LocalStorageService } from 'angular-2-local-storage';
+import { FeedProvider, Feed } from  '../../providers/feed/feed' ;
+import { Noticia } from  '../../models/noticia'
 
 /**
  * Generated class for the FavoritosPage page.
@@ -14,12 +17,43 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'favoritos.html',
 })
 export class FavoritosPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  items: Noticia[];
+  LocalStorageService : LocalStorageService;
+  tolerancia: number = 0;
+  limite: number = 0;
+  constructor(public navCtrl: NavController, public navParams: NavParams, localStorage: LocalStorageService, public feedProvider : FeedProvider) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FavoritosPage');
+    this.setItems();
+  }
+
+  setItems() {
+    this.feedProvider.GetLocalNoticiasLim(this.limite, true).then(noticia => {
+      this.limite = 15;
+      console.log("NOTICIAS TRAZIDAS: " + JSON.stringify(noticia));
+      if (noticia.length == 0 && this.tolerancia < 5) {
+        this.tolerancia++;
+        setTimeout(5000,this.setItems());
+      } else {
+        this.items = noticia;
+      }
+    });
+  }
+
+  doInfinite(infiniteScroll) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      this.feedProvider.GetLocalNoticiasLim(this.limite, true).then(noticia=> {
+        for (let i = 0; i < noticia.length; i++) {
+            this.items.push(noticia[i]);
+        }
+        this.limite+=15;
+      });
+      console.log('Async operation has ended');
+      infiniteScroll.complete();
+    }, 500);
   }
 
 }

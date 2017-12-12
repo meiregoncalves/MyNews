@@ -129,16 +129,20 @@ export class NoticiasProvider {
       return categoria;
   }
 
-  public getLimitado(titulo: string = null, limite:number) {
+  public getLimitado(titulo: string = null, limite:number, somenteFavoritos: boolean) {
     var noticias: Noticia[] = [];
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
-        var sql = 'select rowid, titulo, url, favorito, lida, comentario, idCategoria, idSite from noticias';
+        var sql = 'select rowid, titulo, url, favorito, lida, comentario, idCategoria, idSite from noticias where rowid > 0 ';
         var data: any[] = [];
 
         if (titulo) {
           sql += ' and titulo like ?'
           data.push('%' + titulo + '%');
+        }
+
+        if (somenteFavoritos) {
+          sql += ' and favorito = 1';
         }
 
         //sql += ' order by lida desc'

@@ -27,10 +27,7 @@ export class DatabaseProvider {
 })
   .then((db: SQLiteObject) => {
 
-    db.executeSql('CREATE TABLE IF NOT EXISTS XPTO (la varchar(2))', {}).then(() => console.log('Executed SQL - Create Table xpto'))
-    .catch(e => console.log(e));
-
-    db.executeSql('CREATE TABLE IF NOT EXISTS noticias (titulo varchar(250), url varchar(300), favorito boolean, lida boolean, comentario text, idCategoria int, idSite int)', {})
+    db.executeSql('CREATE TABLE IF NOT EXISTS noticias (titulo varchar(250), url varchar(300), favorito int, lida boolean, comentario text, idCategoria int, idSite int)', {})
       .then(() => console.log('Executed SQL - Create Table'))
       .catch(e => console.log(e));
     db.close();
