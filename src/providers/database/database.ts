@@ -14,13 +14,6 @@ export class DatabaseProvider {
   }
 
   public createDatabase() {
-    /*return this.getDB()
-      .then((db: SQLiteObject) => {
-
-        this.createTables(db);
-      })
-      .catch(e => console.log(e));*/
-      console.log("AQIIII");
     return  this.sqlite.create({
   name: 'mynews.db',
   location: 'default'
