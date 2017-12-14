@@ -6,11 +6,11 @@ export class Noticia {
   titulo: string;
   url: string;
   favorito: number;
-  lida: boolean;
+  lida: number;
   comentario: string;
   categoria: Categoria;
   site: Site;
-  constructor(titulo: string = "", url:string = "", favorito: number = 0, lida: boolean = false, categoria: Categoria = new Categoria(), site:Site = new Site()) {
+  constructor(titulo: string = "", url:string = "", favorito: number = 0, lida: number = 0, categoria: Categoria = new Categoria(), site:Site = new Site()) {
     this.titulo = titulo;
     this.url = url;
     this.favorito = favorito;

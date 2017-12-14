@@ -91,13 +91,14 @@ export class HomePage {
       this.feedProvider.UpdateNoticia(item);
   }
 
-  itemTapped(event, item) {
-    console.log("entrou pag" + item);
-
+  itemAbrir(event, item) {
+    console.log("entrou pag: " + JSON.stringify(item));
+    //marca como lida
+    if (item.lida != 1) {
+      item.lida = 1;
+      this.feedProvider.UpdateNoticia(item);
+    }
     window.open(item.url,'_system', 'location=yes');
-    //this.navCtrl.push(NoticiasExibirPage, {
-    //  item: item
-    //});
   }
 
   inicializaStorage( localStorage: LocalStorageService) {

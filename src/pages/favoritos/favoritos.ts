@@ -41,6 +41,10 @@ export class FavoritosPage {
     });
   }
 
+  itemAbrir(event, item) {
+      window.open(item.url,'_system');
+  }
+
   doInfinite(infiniteScroll) {
     console.log('Begin async operation');
 

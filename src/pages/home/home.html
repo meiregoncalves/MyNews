@@ -9,8 +9,8 @@
 
 <ion-content>
  <ion-list>
-   <button ion-item *ngFor="let item of items" >
-    <div (click)="itemTapped($event, item)">
+   <button ion-item class="item-icon-left" *ngFor="let item of items" (click)="itemAbrir($event, item)">
+    <div>
       <img item-start width="64" height="64" src="assets/imgs/categorias/{{item.categoria.id}}.png"/>
       <label text-wrap>{{item.titulo}}</label>
     </div>

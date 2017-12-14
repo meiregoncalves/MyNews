@@ -52,7 +52,7 @@ export class FeedProvider {
          let lista = res['item'] ;
          for (let i = 0 ; i < lista.length ; i ++ )   {
            let item = lista[i] ;
-           let  noticiaatual  =  new  Noticia(item.title,item.link,0,false,noticia.categoria,noticia.site) ;
+           let  noticiaatual  =  new  Noticia(item.title,item.link,0,0,noticia.categoria,noticia.site) ;
            noticias.push(noticiaatual);
            var validacao = new Noticia();
            this.noticiasProvider.getByURL(noticiaatual.url).then((noticia) => {

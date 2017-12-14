@@ -146,8 +146,10 @@ export class NoticiasProvider {
           sql += ' and favorito = 1';
         }
 
-        //sql += ' order by lida desc'
+        sql += ' order by lida '
         sql += ' LIMIT 15 OFFSET ' + limite;
+
+
         return db.executeSql(sql, data)
           .then((data: any) => {
             if (data.rows.length > 0) {
