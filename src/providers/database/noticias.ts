@@ -26,10 +26,11 @@ export class NoticiasProvider {
   }
 
   public update(noticia: Noticia) {
+    console.log("Noticia Editar: " + JSON.stringify(noticia));
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
-        let sql = 'update noticias set titulo = ?, url = ?, favorito = ?, lida = ?, comentario = ?, idCategoria = ?, idSite = ? where rowid = ?';
-        let data = [noticia.titulo, noticia.url, noticia.favorito, noticia.lida, noticia.comentario, noticia.categoria.id, noticia.site.id, noticia.rowid];
+        let sql = 'update noticias set favorito = ?, lida = ?, comentario = ? where rowid = ?';
+        let data = [noticia.favorito, noticia.lida, noticia.comentario, noticia.rowid];
 
         return db.executeSql(sql, data)
           .catch((e) => console.error(e));

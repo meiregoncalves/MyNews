@@ -86,7 +86,7 @@ export class HomePage {
   }
 
   itemFavoritar(event, item) {
-      console.log(item.favorito);
+      console.log("Favorito " + item.favorito);
       item.favorito = item.favorito==1 ? 0 : 1;
       this.feedProvider.UpdateNoticia(item);
   }

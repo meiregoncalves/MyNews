@@ -37,6 +37,7 @@ export class FeedProvider {
 
   public UpdateNoticia(noticia : Noticia)
   {
+    console.log("Noticia chegou editar: " + JSON.stringify(noticia));
     this.noticiasProvider.update(noticia);
   }
 
