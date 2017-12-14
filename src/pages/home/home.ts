@@ -91,6 +91,10 @@ export class HomePage {
       this.feedProvider.UpdateNoticia(item);
   }
 
+  itemFechar(event, item) {
+      item.deleted = 1;
+      this.feedProvider.UpdateNoticia(item);
+  }
   itemAbrir(event, item) {
     console.log("entrou pag: " + JSON.stringify(item));
     //marca como lida

@@ -29,8 +29,8 @@ export class NoticiasProvider {
     console.log("Noticia Editar: " + JSON.stringify(noticia));
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
-        let sql = 'update noticias set favorito = ?, lida = ?, comentario = ? where rowid = ?';
-        let data = [noticia.favorito, noticia.lida, noticia.comentario, noticia.rowid];
+        let sql = 'update noticias set favorito = ?, lida = ?, deleted = ? where rowid = ?';
+        let data = [noticia.favorito, noticia.lida, noticia.deleted, noticia.rowid];
 
         return db.executeSql(sql, data)
           .catch((e) => console.error(e));
@@ -134,7 +134,7 @@ export class NoticiasProvider {
     var noticias: Noticia[] = [];
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
-        var sql = 'select rowid, titulo, url, favorito, lida, comentario, idCategoria, idSite from noticias where rowid > 0 ';
+        var sql = 'select rowid, titulo, url, favorito, lida, comentario, idCategoria, idSite, deleted from noticias where rowid > 0 ';
         var data: any[] = [];
 
         if (titulo) {

@@ -20,7 +20,7 @@ export class DatabaseProvider {
 })
   .then((db: SQLiteObject) => {
 
-    db.executeSql('CREATE TABLE IF NOT EXISTS noticias (titulo varchar(250), url varchar(300), favorito int, lida int, comentario text, idCategoria int, idSite int)', {})
+    db.executeSql('CREATE TABLE IF NOT EXISTS noticias (titulo varchar(250), url varchar(300), favorito int, lida int, deleted int, comentario text, idCategoria int, idSite int)', {})
       .then(() => console.log('Executed SQL - Create Table'))
       .catch(e => console.log(e));
     db.close();
