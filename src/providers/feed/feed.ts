@@ -40,9 +40,9 @@ export class FeedProvider {
     this.noticiasProvider.update(noticia);
   }
 
-  public DeleteNoticia(noticia : Noticia)
+  public DeleteNoticiabyData(dias : number)
   {
-    this.noticiasProvider.remove(noticia.rowid);
+    this.noticiasProvider.removebyData(dias);
   }
 
   public getNoticiasbyURL (noticia : Cadastro_Feed, localStorageService : LocalStorageService  )   {

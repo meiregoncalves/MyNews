@@ -9,6 +9,7 @@ import { CategoriasPage } from '../pages/categorias/categorias';
 import { ConfiguracoesPage } from '../pages/configuracoes/configuracoes';
 import { NoticiasExibirPage } from '../pages/noticias-exibir/noticias-exibir';
 import { DatabaseProvider } from '../providers/database/database'
+import { NoticiasProvider } from '../providers/database/noticias'
 
 @Component({
   templateUrl: 'app.html'
@@ -20,7 +21,7 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public dbProvider: DatabaseProvider) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public dbProvider: DatabaseProvider, public noticiasProvider: NoticiasProvider) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -43,6 +44,7 @@ export class MyApp {
       this.dbProvider.createDatabase()
         .then(() => {
           this.splashScreen.hide();
+          this.noticiasProvider.removebyData(15);
         })
         .catch(() => {
           this.splashScreen.hide();

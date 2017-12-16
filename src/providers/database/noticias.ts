@@ -16,8 +16,9 @@ export class NoticiasProvider {
     console.log('ADICIONOU NOTICIA aqui');
     return this.dbProvider.getDB()
       .then((db: SQLiteObject) => {
-        let sql = 'insert into noticias (titulo, url, favorito, lida, comentario, idCategoria, idSite) values (?, ?, ?, ?, ?, ?, ?)';
-        let data = [noticia.titulo, noticia.url, noticia.favorito, noticia.lida, noticia.comentario, noticia.categoria.id, noticia.site.id];
+        var myDate = new Date();
+        let sql = 'insert into noticias (titulo, url, favorito, lida, comentario, idCategoria, idSite, dataGravacao) values (?, ?, ?, ?, ?, ?, ?, ?)';
+        let data = [noticia.titulo, noticia.url, noticia.favorito, noticia.lida, noticia.comentario, noticia.categoria.id, noticia.site.id, myDate.getDate()];
 
         return db.executeSql(sql, data).then(()=> console.log('ADICIONOU NOTICIA'))
           .catch((e) => console.error(e));
@@ -43,6 +44,18 @@ export class NoticiasProvider {
       .then((db: SQLiteObject) => {
         let sql = 'delete from noticias where rowid = ?';
         let data = [id];
+
+        return db.executeSql(sql, data)
+          .catch((e) => console.error(e));
+      })
+      .catch((e) => console.error(e));
+  }
+
+  public removebyData(dias: number) {
+    return this.dbProvider.getDB()
+      .then((db: SQLiteObject) => {
+        let sql = "delete from noticias where favorito = 0 and dataGravacao < (date('now')-?) ";
+        let data = [dias];
 
         return db.executeSql(sql, data)
           .catch((e) => console.error(e));
