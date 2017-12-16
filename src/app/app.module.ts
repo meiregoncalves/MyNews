@@ -33,7 +33,7 @@ import { NoticiasProvider } from '../providers/database/noticias';
     IonicModule.forRoot(MyApp),
     HttpModule,
     LocalStorageModule.withConfig({
-      prefix: 'despesasApp',
+      prefix: 'MyNewsApp',
       storageType: 'localStorage'
     })
 

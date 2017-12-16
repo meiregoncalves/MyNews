@@ -16,13 +16,17 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content style="background-color:#A52A2A;">
   <ion-list>
-    <button ion-item [hidden]="item.deleted==1" *ngFor="let item of items" (click)="itemAbrir($event, item)">
-     <div>
-       <img item-start width="64" height="64" src="assets/imgs/categorias/{{item.categoria.id}}.png"/>
-       <label text-wrap>{{item.titulo}}</label>
-     </div>
+    <button [hidden]="item.deleted==1" *ngFor="let item of items" style="background-color:#A52A2A;width:100%;">
+      <ion-item (click)="itemAbrir($event, item)" style="border-radius: 10px;width:100%;margin-top:10px;">
+       <div style="float:left;margin-right:5px;margin-left:-5px;">
+           <img width="50" height="50" src="assets/imgs/categorias/{{item.categoria.id}}.png"/>
+       </div>
+       <div>
+           <label text-wrap style="font-size:13px;">{{item.titulo}}</label>
+       </div>
+     </ion-item>
     </button>
   </ion-list>
 
