@@ -7,19 +7,25 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content style="background-color:#A52A2A;">
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  
+
  <ion-list>
-   <button ion-item [hidden]="item.deleted==1" *ngFor="let item of items">
-    <div (click)="itemAbrir($event, item)">
-      <img width="64" height="64" src="assets/imgs/categorias/{{item.categoria.id}}.png"/>
-      <label text-wrap>{{item.titulo}}</label>
-    </div>
-    <img (click)="itemFavoritar($event, item)" item-end width="18" height="18" src="assets/imgs/{{item.favorito==1?'fav':'notfav'}}.png"/>
-    <img (click)="itemFechar($event, item)" item-end width="18" height="18" src="assets/imgs/fechar_noticia.png"/>
+   <button [hidden]="item.deleted==1" *ngFor="let item of items" style="background-color:#A52A2A;width:100%;">
+     <div style="float:right;border:1px;border-color:white;">
+         <img (click)="itemFavoritar($event, item)" style="margin:6px;" item-end width="20" height="20" src="assets/imgs/{{item.favorito==1?'fav':'notfav'}}.png"/>
+         <img (click)="itemFechar($event, item)" style="margin:6px;margin-left:15px;" item-end width="20" height="20" src="assets/imgs/fechar_noticia.png"/>
+     </div>
+     <ion-item (click)="itemAbrir($event, item)" style="border-radius: 10px;width:100%">
+      <div style="float:left;margin-right:5px;margin-left:-5px;">
+          <img width="50" height="50" src="assets/imgs/categorias/{{item.categoria.id}}.png"/>
+      </div>
+      <div>
+          <label text-wrap style="font-size:13px;">{{item.titulo}}</label>
+      </div>
+    </ion-item>
    </button>
  </ion-list>
 
