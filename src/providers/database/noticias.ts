@@ -159,7 +159,7 @@ export class NoticiasProvider {
           sql += ' and favorito = 1';
         }
 
-        sql += ' order by lida '
+        sql += ' order by idCategoria, lida '
         sql += ' LIMIT 15 OFFSET ' + limite;
 
 

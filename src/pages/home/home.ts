@@ -34,18 +34,35 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    this.getFeeds();
+    this.feedProvider.GetLocalNoticiasLim(this.limite, false).then(noticia => {
+
+      if (noticia.length == 0) {
+          this.getFeeds();
+      } else {
+        this.items = noticia;
+        this.limite = 15;
+        this.getFeeds();
+      }
+    });
   }
 
   setItems() {
     this.feedProvider.GetLocalNoticiasLim(this.limite, false).then(noticia => {
-      this.limite = 15;
+
       console.log("NOTICIAS TRAZIDAS: " + JSON.stringify(noticia));
       if (noticia.length == 0 && this.tolerancia < 5) {
         this.tolerancia++;
         setTimeout(5000,this.setItems());
       } else {
-        this.items = noticia;
+        if (this.items.length == 0) {
+            this.items = noticia;
+        } else {
+          for (let i = 0; i < noticia.length; i++) {
+              this.items.push(noticia[i]);
+          }
+        }
+
+        this.limite += 15;
       }
     });
   }
@@ -62,11 +79,18 @@ export class HomePage {
       });
       console.log('Async operation has ended');
       infiniteScroll.complete();
-    }, 500);
+    }, 1500);
   }
 
   getFeeds() {
     this.listaCadastro_Feed = new Cadastro_Feed().ListaCadastro_Feeds(this.LocalStorageService);
+    this.listaCadastro_Feed = this.listaCadastro_Feed.sort(function (a:Cadastro_Feed,b:Cadastro_Feed) {
+      if (a.categoria > b.categoria)
+        return 1;
+      if (a.categoria < b.categoria)
+        return -1;
+      return 0;
+    });
     var count = 0, el = 0;
     var ativos = this.listaCadastro_Feed.length;
     for (; count < this.listaCadastro_Feed.length; count++) {
