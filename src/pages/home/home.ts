@@ -104,6 +104,7 @@ export class HomePage {
   itemFechar(event, item) {
       item.deleted = 1;
       this.feedProvider.UpdateNoticia(item);
+      this.doInfinite(null);
   }
   itemAbrir(event, item) {
     console.log("entrou pag: " + JSON.stringify(item));
