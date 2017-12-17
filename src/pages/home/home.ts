@@ -65,16 +65,6 @@ export class HomePage {
     }, 500);
   }
 
-  doRefresh(refresher) {
-    console.log('Begin async operation', refresher);
-
-    setTimeout(() => {
-      console.log('Async operation has ended');
-      this.getFeeds();
-      refresher.complete();
-    }, 500);
-  }
-
   getFeeds() {
     this.listaCadastro_Feed = new Cadastro_Feed().ListaCadastro_Feeds(this.LocalStorageService);
     var count = 0, el = 0;
